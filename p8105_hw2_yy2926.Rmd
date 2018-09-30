@@ -1,7 +1,7 @@
 ---
 title: "Homework 2"
 author: "Yuixn"
-date: "2018å¹´9æœˆ29æ—¥"
+date: "2018å¹?9æœ?29æ—?"
 output: github_document
 ---
 ```{r setup,include=FALSE}
@@ -31,3 +31,15 @@ NYC_Retain$entry <- ifelse(NYC_Retain$entry == "YES",TRUE,FALSE)
 *** Q3: What proportion of station entrances / exits without vending allow entrance?
 
 *** A3: The proportion of station entrances / exits without vending allow entrance is  `r table(NYC_Retain$entry)["TRUE"]/table(NYC_Retain$exit_only)["Yes"]`
+
+```{r include=FALSE}
+attach(NYC_Retain)
+NYC_Retain$route1 <-as.character(route1)
+NYC_Retain$route2 <-as.character(route2)
+NYC_Retain$route3 <-as.character(route3)
+NYC_Retain$route4 <-as.character(route4)
+NYC_Retain$route5 <-as.character(route5)
+NYC_Retain$route6 <-as.character(route6)
+NYC_Retain$route7 <-as.character(route7)
+detach(NYC_Retain)
+```
