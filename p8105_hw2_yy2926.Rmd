@@ -23,3 +23,11 @@ NYC_Retain$entry <- ifelse(NYC_Retain$entry == "YES",TRUE,FALSE)
 *** Q1 How many distinct stations are there? Note that stations are identified both by name and by line (e.g. 125th St A/B/C/D; 125st 1; 125st 4/5); the distinct function may be useful here.
 
 *** A1: There are `r nrow(distinct (NYC_Retain,line,station_name))` distinct stations according to both name and line.
+
+*** Q2: How many stations are ADA compliant?
+
+*** A2: There are `r  table(NYC_Retain$ada)["TRUE"]` stations are ADA compliant. 
+
+*** Q3: What proportion of station entrances / exits without vending allow entrance?
+
+*** A3: The proportion of station entrances / exits without vending allow entrance is 
