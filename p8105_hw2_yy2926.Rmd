@@ -18,3 +18,4 @@ NYC_Retain <- select(NYC_Tranist,line:vending,ada,ada_notes)
 NYC_Retain$entry <- ifelse(NYC_Retain$entry == "YES",TRUE,FALSE)
 ```
 
+*** This dataset contains several variables which state the information about the specific station. Variables include the name, location, and entrance or vending facilities of the station. So far, we cleaned some redundant variables, including the geographic location of the station, the exit of the station. Also, I changed the name of the variable which makes it more succinct. The dimension of the resulting dataset is `r nrow(NYC_Retain)`. I think these data are tidy since we have variables in columns, observations in Rows, and every value has a cell.
