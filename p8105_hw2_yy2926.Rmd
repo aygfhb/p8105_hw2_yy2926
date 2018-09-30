@@ -14,6 +14,6 @@ Problem 1
 ```{r}
 NYC_Tranist <- read.csv("~/data/NYC_Transit_Subway_Entrance_And_Exit_Data.csv")
 NYC_Tranist <- janitor::clean_names(NYC_Tranist)
-
+NYC_Retain <- select(NYC_Tranist,line:vending,ada,ada_notes)
 ```
 
