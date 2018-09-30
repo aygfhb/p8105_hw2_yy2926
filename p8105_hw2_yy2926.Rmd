@@ -19,3 +19,7 @@ NYC_Retain$entry <- ifelse(NYC_Retain$entry == "YES",TRUE,FALSE)
 ```
 
 *** This dataset contains several variables which state the information about the specific station. Variables include the name, location, and entrance or vending facilities of the station. So far, we cleaned some redundant variables, including the geographic location of the station, the exit of the station. Also, I changed the name of the variable which makes it more succinct. The dimension of the resulting dataset is `r nrow(NYC_Retain)`. I think these data are tidy since we have variables in columns, observations in Rows, and every value has a cell.
+
+*** Q1 How many distinct stations are there? Note that stations are identified both by name and by line (e.g. 125th St A/B/C/D; 125st 1; 125st 4/5); the distinct function may be useful here.
+
+*** A1: There are `r nrow(distinct (NYC_Retain,line,station_name))` distinct stations according to both name and line.
