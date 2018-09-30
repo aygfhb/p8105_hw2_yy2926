@@ -1,7 +1,7 @@
 ---
 title: "Homework 2"
 author: "Yuixn"
-date: "2018???9???29???"
+date: "2018.9.29"
 output: github_document
 ---
 ```{r setup,include=FALSE}
@@ -44,8 +44,9 @@ NYC_Retain$route7 <-as.character(route7)
 detach(NYC_Retain)
 ```
 Refrom Data
-```{r reformat_data}
+```{r reform_data}
 NYC_Retain = unite(NYC_Retain,Route_name,route1:route11,sep='',remove=TRUE)
 NYC_Retain$Route_name = gsub("NA","",NYC_Retain$Route_name)
-
+NYC_Retain = mutate(NYC_Retain,Route_number = nchar(NYC_Retain$Route_name)) %>%
+select(line:station_longitude,Route_name,Route_number,everything())
 ```
