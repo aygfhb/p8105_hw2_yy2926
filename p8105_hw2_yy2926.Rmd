@@ -50,3 +50,10 @@ NYC_Retain$Route_name = gsub("NA","",NYC_Retain$Route_name)
 NYC_Retain = mutate(NYC_Retain,Route_number = nchar(NYC_Retain$Route_name)) %>%
 select(line:station_longitude,Route_name,Route_number,everything())
 ```
+*** Q3: How many distinct stations serve the A train?
+
+*** A3: There are `r table(grepl("A",NYC_Retain$Route_name))["TRUE"]` stations serve the A train. 
+
+*** Q4:  Of the stations that serve the A train, how many are ADA compliant?
+
+*** A4:
