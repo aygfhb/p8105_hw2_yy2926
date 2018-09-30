@@ -1,7 +1,7 @@
 ---
 title: "Homework 2"
 author: "Yuixn"
-date: "2018å¹?9æœ?29æ—?"
+date: "2018???9???29???"
 output: github_document
 ---
 ```{r setup,include=FALSE}
@@ -11,7 +11,7 @@ library(dplyr)
 
 Problem 1
 
-```{r}
+```{r load_data}
 NYC_Tranist <- read.csv("~/data/NYC_Transit_Subway_Entrance_And_Exit_Data.csv")
 NYC_Tranist <- janitor::clean_names(NYC_Tranist)
 NYC_Retain <- select(NYC_Tranist,line:vending,ada,ada_notes)
@@ -42,4 +42,8 @@ NYC_Retain$route5 <-as.character(route5)
 NYC_Retain$route6 <-as.character(route6)
 NYC_Retain$route7 <-as.character(route7)
 detach(NYC_Retain)
+```
+
+```{r reformat_data}
+route_name = unite(NYC_Retain, route1:route11,sep='',remove = TRUE)
 ```
