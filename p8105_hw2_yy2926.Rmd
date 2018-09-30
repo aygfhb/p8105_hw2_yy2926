@@ -4,8 +4,16 @@ author: "Yuixn"
 date: "2018年9月29日"
 output: github_document
 ---
+```{r setup,include=FALSE}
+library(tidyverse)
+library(dplyr)
+```
+
+Problem 1
 
 ```{r}
 NYC_Tranist <- read.csv("~/data/NYC_Transit_Subway_Entrance_And_Exit_Data.csv")
+NYC_Tranist <- janitor::clean_names(NYC_Tranist)
+
 ```
 
