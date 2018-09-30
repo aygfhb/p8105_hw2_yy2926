@@ -15,5 +15,6 @@ Problem 1
 NYC_Tranist <- read.csv("~/data/NYC_Transit_Subway_Entrance_And_Exit_Data.csv")
 NYC_Tranist <- janitor::clean_names(NYC_Tranist)
 NYC_Retain <- select(NYC_Tranist,line:vending,ada,ada_notes)
+NYC_Retain$entry <- ifelse(NYC_Retain$entry == "YES",TRUE,FALSE)
 ```
 
