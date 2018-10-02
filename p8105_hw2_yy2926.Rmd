@@ -63,5 +63,6 @@ Problem 2
 
 ```{r load_clean_data}
 Trash_Wheel <- read_excel("~/data/HealthyHarborWaterWheelTotals2017-9-26.xlsx",range=cell_cols("A:N")) %>%
-janitor::clean_names()
+janitor::clean_names()%>%
+filter(!is.na(dumpster))
 ```
