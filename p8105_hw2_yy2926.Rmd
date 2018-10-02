@@ -72,6 +72,7 @@ mutate(sports_balls=as.integer(round(sports_balls)))
 Precipitation_2017 <- read_excel("~/data/HealthyHarborWaterWheelTotals2017-9-26.xlsx",sheet="2017 Precipitation",range="A2:B14") %>%
 janitor::clean_names()%>%
 filter(!is.na(total))%>%
-select(year="2017",month,total)
+mutate(year=2017)%>%
+select(year,month,total)
 ```
 
