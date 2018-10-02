@@ -7,6 +7,7 @@ output: github_document
 ```{r setup,include=FALSE}
 library(tidyverse)
 library(dplyr)
+library(readxl)
 ```
 
 Problem 1
@@ -43,7 +44,7 @@ NYC_Retain$route6 <-as.character(route6)
 NYC_Retain$route7 <-as.character(route7)
 detach(NYC_Retain)
 ```
-Refrom Data
+Reform Data
 ```{r reform_data}
 NYC_Retain = unite(NYC_Retain,Route_name,route1:route11,sep='',remove=TRUE)
 NYC_Retain$Route_name = gsub("NA","",NYC_Retain$Route_name)
@@ -57,3 +58,10 @@ select(line:station_longitude,Route_name,Route_number,everything())
 *** Q4:  Of the stations that serve the A train, how many are ADA compliant?
 
 *** A4:
+
+Problem 2
+
+```{r load_clean_data}
+Trash_Wheel <- read_excel("~/data/HealthyHarborWaterWheelTotals2017-9-26.xlsx",range=cell_cols("A:N")) %>%
+janitor::clean_names()
+```
