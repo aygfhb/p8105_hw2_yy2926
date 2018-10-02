@@ -8,6 +8,7 @@ output: github_document
 library(tidyverse)
 library(dplyr)
 library(readxl)
+library(p8105.datasets)
 ```
 
 Problem 1
@@ -88,3 +89,12 @@ select(year,month,total)
 Precipitation_Combine <- merge(Precipitation_2016,Precipitation_2017,by ="month",all=TRUE)%>%
 mutate(month = month.name[month])
 ```
+*** Q1: Be sure to note the number of observations in both resulting datasets, and give examples of key variables.
+
+*** Q2:For available data, what was the total precipitation in 2017? 
+
+*** A2: The total precitation in 2017 is  `r sum(Precipitation_2017$total)`
+
+*** Q3:What was the median number of sports balls in a dumpster in 2016?
+
+*** A3: The median number of sports balls in a dumpster in 2016 is `r median(Trash_Wheel$sports_balls[116:165])`
