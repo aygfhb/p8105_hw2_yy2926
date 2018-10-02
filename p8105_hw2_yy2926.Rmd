@@ -98,3 +98,11 @@ mutate(month = month.name[month])
 *** Q3:What was the median number of sports balls in a dumpster in 2016?
 
 *** A3: The median number of sports balls in a dumpster in 2016 is `r median(Trash_Wheel$sports_balls[116:165])`
+
+Problem 3
+```{r read_dataset}
+data("brfss_smart2010")
+brfss_data <- brfss_smart2010 %>%
+janitor::clean_names() %>%
+filter(topic == "Overall Health") 
+```
