@@ -61,9 +61,17 @@ select(line:station_longitude,Route_name,Route_number,everything())
 
 Problem 2
 
-```{r load_clean_data}
+```{r load_TrashWheel Data}
 Trash_Wheel <- read_excel("~/data/HealthyHarborWaterWheelTotals2017-9-26.xlsx",range=cell_cols("A:N")) %>%
 janitor::clean_names()%>%
 filter(!is.na(dumpster))%>%
 mutate(sports_balls=as.integer(round(sports_balls)))
 ```
+
+```{r load_Precipitation2017}
+Precipitation_2017 <- read_excel("~/data/HealthyHarborWaterWheelTotals2017-9-26.xlsx",sheet="2017 Precipitation",range="A2:B14") %>%
+janitor::clean_names()%>%
+filter(!is.na(total))%>%
+select(year="2017",month,total)
+```
+
