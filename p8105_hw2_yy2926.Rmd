@@ -106,5 +106,7 @@ brfss_data <- brfss_smart2010 %>%
 janitor::clean_names() %>%
 filter(topic == "Overall Health") %>%
 select(-class, -topic, -question, -sample_size, -(confidence_limit_low:geo_location)) %>%
-spread(key=response,value=data_value)
+spread(key=response,value=data_value) %>%
+janitor::clean_names() %>%
+mutate(Proportion = excellent+very_good)
 ```
