@@ -1,6 +1,6 @@
 ---
 title: "Homework 2"
-author: "Yuixn"
+author: "Yuxin"
 date: "2018.9.29"
 output: github_document
 ---
