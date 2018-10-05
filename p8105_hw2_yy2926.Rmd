@@ -5,6 +5,7 @@ date: "2018.9.29"
 output: github_document
 ---
 ```{r setup,include=FALSE}
+devtools::install_github("p8105/p8105.datasets")
 library(tidyverse)
 library(dplyr)
 library(readxl)
@@ -32,7 +33,7 @@ NYC_Retain$entry <- ifelse(NYC_Retain$entry == "YES",TRUE,FALSE)
 
 *** Q3: What proportion of station entrances / exits without vending allow entrance?
 
-*** A3: The proportion of station entrances / exits without vending allow entrance is  `r table(NYC_Retain$entry)["TRUE"]/table(NYC_Retain$exit_only)["Yes"]`
+*** A3: The proportion of station entrances / exits without vending allow entrance is  `r sum(NYC_Retain$vending == "NO" & NYC_Retain$entry == "TRUE")/sum(NYC_Retain$vending == "NO")`
 
 ```{r include=FALSE}
 attach(NYC_Retain)
@@ -45,7 +46,7 @@ NYC_Retain$route6 <-as.character(route6)
 NYC_Retain$route7 <-as.character(route7)
 detach(NYC_Retain)
 ```
-Reform Data
+
 ```{r reform_data}
 NYC_Retain = unite(NYC_Retain,Route_name,route1:route11,sep='',remove=TRUE)
 NYC_Retain$Route_name = gsub("NA","",NYC_Retain$Route_name)
@@ -58,38 +59,48 @@ select(line:station_longitude,Route_name,Route_number,everything())
 
 *** Q4:  Of the stations that serve the A train, how many are ADA compliant?
 
-*** A4:
+*** A4: `{r}
+filter(NYC_Retain,route1 == "A") %>%
+summary(ada)`
+We can observe 107 stations which serve the A train that are ADA compliant.
+
 
 Problem 2
 
 ```{r load_TrashWheel Data}
-Trash_Wheel <- read_excel("~/data/HealthyHarborWaterWheelTotals2017-9-26.xlsx",range=cell_cols("A:N")) %>%
+Trash_Wheel <- read_excel("~/data/HealthyHarborWaterWheelTotals2018-7-28.xlsx",range=cell_cols("A:N")) %>%
 janitor::clean_names()%>%
 filter(!is.na(dumpster))%>%
 mutate(sports_balls=as.integer(round(sports_balls)))
+Trash_Wheel
 ```
 
 ```{r load_Precipitation2017}
-Precipitation_2017 <- read_excel("~/data/HealthyHarborWaterWheelTotals2017-9-26.xlsx",sheet="2017 Precipitation",range="A2:B14") %>%
+Precipitation_2017 <- read_excel("~/data/HealthyHarborWaterWheelTotals2018-7-28.xlsx",sheet="2017 Precipitation",range="A2:B14") %>%
 janitor::clean_names()%>%
 filter(!is.na(total))%>%
 mutate(year=2017)%>%
 select(year,month,total)
+Precipitation_2017
 ```
 
 ```{r load_Precipitation2016}
-Precipitation_2016 <- read_excel("~/data/HealthyHarborWaterWheelTotals2017-9-26.xlsx",sheet="2016 Precipitation",range="A2:B14") %>%
+Precipitation_2016 <- read_excel("~/data/HealthyHarborWaterWheelTotals2018-7-28.xlsx",sheet="2016 Precipitation",range="A2:B14") %>%
 janitor::clean_names()%>%
 filter(!is.na(total))%>%
 mutate(year=2016)%>%
 select(year,month,total)
+Precipitation_2016
 ```
 
 ```{r combine_datasets}
 Precipitation_Combine <- merge(Precipitation_2016,Precipitation_2017,by ="month",all=TRUE)%>%
 mutate(month = month.name[month])
+Precipitation_Combine
 ```
 *** Q1: Be sure to note the number of observations in both resulting datasets, and give examples of key variables.
+
+*** A1: There are 285 observations and 14 variables in Trash Wheel dataset. There are 12 observation and 3 variables in Precipitation 2016,2017. In the trash wheel example, 14 variables basically demonstrate the time(month,year,date) and number label of dumpster(dumpster). It also specify what kind of trash is recorded in the trash wheel. In the precipitation example, dataset recorded the rainfall amount of different month.
 
 *** Q2:For available data, what was the total precipitation in 2017? 
 
@@ -97,7 +108,7 @@ mutate(month = month.name[month])
 
 *** Q3:What was the median number of sports balls in a dumpster in 2016?
 
-*** A3: The median number of sports balls in a dumpster in 2016 is `r median(Trash_Wheel$sports_balls[116:165])`
+*** A3: The median number of sports balls in a dumpster in 2016 is `r median(Trash_Wheel$sports_balls[116:166])`
 
 Problem 3
 ```{r read_dataset}
@@ -109,6 +120,7 @@ select(-class, -topic, -question, -sample_size, -(confidence_limit_low:geo_locat
 spread(key=response,value=data_value) %>%
 janitor::clean_names() %>%
 mutate(Proportion = excellent+very_good)
+brfss_data
 ```
 
 Q1: How many unique locations are included in the dataset? Is every state represented? What state is observed the most?
@@ -117,10 +129,26 @@ A1: There are `r length(unique(brfss_data$locationdesc))` unique locations are i
 
 Q2: In 2002, what is the median of the “Excellent” response value?
 
-A2: The median of the "Excellent" response value is `r median(brfss_data$excellent[1:157])`
+A2: The median of the "Excellent" response value is 23.6
+```{r}
+brfss_data %>%
+group_by(year)%>%
+filter(year == 2002) %>% 
+summarize(median_excellent = median(na.omit(excellent)))
+``` 
 Q3: Make a histogram of “Excellent” response values in the year 2002.
+
+A3:
 ```{r Problem3_histogram}
 ggplot(subset(brfss_data, year == 2002),aes(x=excellent))+geom_histogram()
 ```
+
+
 Q4: Make a scatterplot showing the proportion of “Excellent” response values in New York County and Queens County (both in NY State) in each year from 2002 to 2010.
+```{r Problem3_scatter}
+brfss_data %>%
+group_by(locationdesc) %>%
+filter(locationdesc == "NY - New York County" |locationdesc == "NY - Queens County") %>%
+ggplot(aes(x=year,y=excellent))+geom_point(aes(color = locationdesc))
+```
 
